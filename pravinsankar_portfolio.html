@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pravinsankar A.G — Software Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #ffffff0f;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 6rem 2.5rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,229,255,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 10% 80%, rgba(124,58,237,0.08) 0%, transparent 60%);
+  }
+  .grid-overlay {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+    padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 2rem;
+    font-size: 0.7rem; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase;
+    animation: fadeUp 0.8s ease both;
+  }
+  .badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(3rem, 8vw, 7rem); line-height: 0.95;
+    letter-spacing: -3px; margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-title {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--muted);
+    margin-bottom: 2rem; animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-desc {
+    font-size: 0.85rem; color: var(--muted); line-height: 1.8;
+    max-width: 560px; margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.6s ease both; }
+  .btn {
+    padding: 0.75rem 2rem; border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s; border: none;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary { background: var(--accent); color: var(--bg); font-weight: 600; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,255,0.3); }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 3rem; border-top: 1px solid var(--border);
+    animation: fadeUp 0.8s 0.75s ease both;
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; color: var(--accent); }
+  .stat-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 2.5rem; }
+  .section-header { margin-bottom: 4rem; }
+  .section-tag { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -2px; }
+  .section-line { width: 60px; height: 3px; background: var(--accent); margin-top: 1rem; border-radius: 2px; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.75rem; transition: all 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
+  .skill-category { font-size: 0.7rem; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem; border-radius: 4px; font-size: 0.75rem; color: var(--text);
+    transition: all 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; gap: 2rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; transition: all 0.3s; cursor: pointer;
+  }
+  .project-card:hover { border-color: rgba(0,229,255,0.25); box-shadow: 0 20px 60px rgba(0,0,0,0.4); transform: translateY(-4px); }
+  .project-header { padding: 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .project-icon { font-size: 2.5rem; line-height: 1; }
+  .project-meta { flex: 1; }
+  .project-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .project-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+  .project-badge { padding: 0.3rem 0.7rem; border-radius: 100px; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; }
+  .badge-java { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.2); }
+  .badge-sql { background: rgba(34,197,94,0.1); color: var(--success); border: 1px solid rgba(34,197,94,0.2); }
+  .project-features { padding: 1.5rem 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .feature-chip { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.7rem; color: var(--muted); }
+  .project-action { padding: 1.25rem 2rem; border-top: 1px solid var(--border); }
+  .launch-btn {
+    width: 100%; padding: 0.85rem; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+    color: var(--accent); border-radius: 8px; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s; text-transform: uppercase;
+  }
+  .launch-btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.92); backdrop-filter: blur(10px);
+    align-items: flex-start; justify-content: center;
+    padding: 2rem; overflow-y: auto;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+    width: 100%; max-width: 900px; overflow: hidden; animation: modalIn 0.3s ease;
+    margin: auto;
+  }
+  @keyframes modalIn { from{opacity:0;transform:scale(0.95) translateY(20px)} to{opacity:1;transform:none} }
+  .modal-nav {
+    padding: 1.25rem 2rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  .modal-close {
+    width: 36px; height: 36px; background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: var(--danger); border-color: var(--danger); }
+  .modal-body { padding: 2rem; }
+
+  /* APP STYLES */
+  .app-container { background: var(--bg); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+  .app-header {
+    background: var(--card); padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .app-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+  .app-subtitle { font-size: 0.7rem; color: var(--muted); }
+  .app-body { padding: 1.5rem; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .data-table th { text-align: left; padding: 0.6rem 1rem; background: rgba(0,229,255,0.06); color: var(--accent); font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* FORM */
+  .form-grid { display: grid; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .form-control {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    color: var(--text); padding: 0.65rem 1rem; border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; transition: border-color 0.2s;
+  }
+  .form-control:focus { outline: none; border-color: var(--accent); }
+  .form-control option { background: var(--card); }
+  .btn-sm { padding: 0.55rem 1.25rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; border: none; font-family: 'JetBrains Mono', monospace; transition: all 0.2s; }
+  .btn-accent { background: var(--accent); color: var(--bg); font-weight: 600; }
+  .btn-accent:hover { opacity: 0.85; }
+  .btn-danger { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+  .btn-danger:hover { background: var(--danger); color: white; }
+  .btn-success { background: rgba(34,197,94,0.1); color: var(--success); border: 1px solid rgba(34,197,94,0.2); }
+  .btn-success:hover { background: var(--success); color: white; }
+  .btn-warn { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.2); }
+  .btn-warn:hover { background: var(--warning); color: var(--bg); }
+
+  .alert { padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.78rem; margin-bottom: 1rem; }
+  .alert-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: var(--success); }
+  .alert-danger { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: var(--danger); }
+  .alert-info { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2); color: var(--accent); }
+
+  .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0; }
+  .tab-btn {
+    padding: 0.5rem 1rem; background: transparent; border: none; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn:hover { color: var(--text); }
+
+  .badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; }
+  .badge-available { background: rgba(34,197,94,0.1); color: var(--success); }
+  .badge-issued { background: rgba(245,158,11,0.1); color: var(--warning); }
+  .badge-overdue { background: rgba(239,68,68,0.1); color: var(--danger); }
+  .badge-savings { background: rgba(34,197,94,0.1); color: var(--success); }
+  .badge-checking { background: rgba(0,229,255,0.1); color: var(--accent); }
+  .badge-loan { background: rgba(245,158,11,0.1); color: var(--warning); }
+  .badge-credit { background: rgba(124,58,237,0.1); color: #a78bfa; }
+
+  .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .summary-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
+  .summary-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .summary-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.5rem; }
+  .summary-value.cyan { color: var(--accent); }
+  .summary-value.green { color: var(--success); }
+  .summary-value.yellow { color: var(--warning); }
+  .summary-value.red { color: var(--danger); }
+
+  /* CALC */
+  .calc-wrap { display: grid; grid-template-columns: 1fr 260px; gap: 1.5rem; }
+  .calc-display {
+    background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.25rem; text-align: right; margin-bottom: 0.75rem;
+  }
+  .calc-expr { font-size: 0.75rem; color: var(--muted); min-height: 1.2rem; }
+  .calc-result { font-size: 2rem; font-weight: 600; color: var(--text); word-break: break-all; }
+  .calc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.5rem; }
+  .calc-key {
+    padding: 0.85rem 0.5rem; border-radius: 8px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text); font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem; cursor: pointer; transition: all 0.15s; text-align: center;
+  }
+  .calc-key:hover { background: rgba(255,255,255,0.08); }
+  .calc-key.op { color: var(--accent); border-color: rgba(0,229,255,0.2); }
+  .calc-key.eq { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+  .calc-key.eq:hover { opacity: 0.85; }
+  .calc-key.clear { color: var(--danger); border-color: rgba(239,68,68,0.2); }
+  .calc-key.span2 { grid-column: span 2; }
+
+  /* EDUCATION */
+  .edu-timeline { position: relative; padding-left: 2rem; }
+  .edu-timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .edu-item { position: relative; margin-bottom: 2.5rem; }
+  .edu-dot { position: absolute; left: -2.35rem; top: 0.3rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(0,229,255,0.5); }
+  .edu-year { font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 0.4rem; }
+  .edu-school { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+  .edu-degree { font-size: 0.8rem; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: all 0.3s;
+    text-decoration: none; color: var(--text);
+  }
+  .contact-card:hover { border-color: rgba(0,229,255,0.3); color: var(--accent); transform: translateY(-2px); }
+  .contact-icon { font-size: 1.5rem; }
+  .contact-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.2rem; }
+  .contact-value { font-size: 0.8rem; }
+
+  /* FOOTER */
+  footer { padding: 3rem 2.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.75rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.25rem; }
+    .hero { padding: 5rem 1.25rem 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .calc-wrap { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PS.AG</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>Available for Opportunities</div>
+    <h1 class="hero-name">PRAVIN<br><span>SANKAR</span><br>A.G</h1>
+    <p class="hero-title">Software Developer · Java Specialist · B.E CSE 2026</p>
+    <p class="hero-desc">
+      B.E. CSE student with strong command of Java, OOP, DSA, SQL and Git.
+      Built production-grade Java applications with CRUD operations, file persistence and relational database integration.
+      Passionate about writing scalable, maintainable code.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">↗ View Projects</a>
+      <a href="mailto:kgv2345@gmail.com" class="btn btn-outline">✉ Contact Me</a>
+      <a href="https://github.com/pravinsankar48" target="_blank" class="btn btn-outline">⌥ GitHub</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">3+</div><div class="stat-label">Projects Built</div></div>
+      <div><div class="stat-num">4+</div><div class="stat-label">Languages</div></div>
+      <div><div class="stat-num">2026</div><div class="stat-label">Graduating</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <div class="section-tag">// 01 — Capabilities</div>
+    <h2 class="section-title">Skills &<br>Technologies</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-category">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Core Concepts</div>
+      <div class="skill-tags">
+        <span class="skill-tag">OOP</span>
+        <span class="skill-tag">DSA</span>
+        <span class="skill-tag">Collections</span>
+        <span class="skill-tag">Exception Handling</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Backend & Data</div>
+      <div class="skill-tags">
+        <span class="skill-tag">JDBC</span>
+        <span class="skill-tag">CRUD</span>
+        <span class="skill-tag">File I/O</span>
+        <span class="skill-tag">REST API</span>
+        <span class="skill-tag">MySQL</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Eclipse</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Windows</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: linear-gradient(180deg, transparent, rgba(0,229,255,0.02), transparent);">
+  <div class="section-header">
+    <div class="section-tag">// 02 — Work</div>
+    <h2 class="section-title">Live<br>Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <!-- Library Management System -->
+    <div class="project-card" onclick="openModal('library')">
+      <div class="project-header">
+        <div style="display:flex;align-items:flex-start;gap:1rem;flex:1">
+          <div class="project-icon">📚</div>
+          <div class="project-meta">
+            <div class="project-name">Library Management System</div>
+            <div class="project-desc">Full-featured library system with book CRUD, issue/return workflow, fine calculation and optimized SQL JOINs. Branch-based version control via GitHub.</div>
+          </div>
+        </div>
+        <div><span class="project-badge badge-sql">MySQL + JDBC</span></div>
+      </div>
+      <div class="project-features">
+        <span class="feature-chip">Book CRUD</span>
+        <span class="feature-chip">Issue & Return</span>
+        <span class="feature-chip">Fine Calculation</span>
+        <span class="feature-chip">SQL JOINs</span>
+        <span class="feature-chip">Search & Filter</span>
+        <span class="feature-chip">GitHub VCS</span>
+      </div>
+      <div class="project-action">
+        <button class="launch-btn">↗ Launch Library System</button>
+      </div>
+    </div>
+
+    <!-- Smart Expense Tracker -->
+    <div class="project-card" onclick="openModal('expense')">
+      <div class="project-header">
+        <div style="display:flex;align-items:flex-start;gap:1rem;flex:1">
+          <div class="project-icon">💰</div>
+          <div class="project-meta">
+            <div class="project-name">Smart Expense Tracker + Calculator</div>
+            <div class="project-desc">CRUD-based expense manager using OOP with monthly category-wise reports and built-in scientific calculator. File persistence via BufferedReader/Writer.</div>
+          </div>
+        </div>
+        <div><span class="project-badge badge-java">Java OOP</span></div>
+      </div>
+      <div class="project-features">
+        <span class="feature-chip">CRUD Operations</span>
+        <span class="feature-chip">Category Reports</span>
+        <span class="feature-chip">File Persistence</span>
+        <span class="feature-chip">ArrayList & HashMap</span>
+        <span class="feature-chip">Calculator</span>
+        <span class="feature-chip">Monthly Summary</span>
+      </div>
+      <div class="project-action">
+        <button class="launch-btn">↗ Launch Expense Tracker</button>
+      </div>
+    </div>
+
+    <!-- Banking System -->
+    <div class="project-card" onclick="openModal('banking')">
+      <div class="project-header">
+        <div style="display:flex;align-items:flex-start;gap:1rem;flex:1">
+          <div class="project-icon">🏦</div>
+          <div class="project-meta">
+            <div class="project-name">Banking System</div>
+            <div class="project-desc">Full banking application with account management, deposits, withdrawals, transfers, loan tracking and transaction history. Built with Java OOP principles.</div>
+          </div>
+        </div>
+        <div><span class="project-badge badge-java">Java OOP</span></div>
+      </div>
+      <div class="project-features">
+        <span class="feature-chip">Account CRUD</span>
+        <span class="feature-chip">Deposits & Withdrawals</span>
+        <span class="feature-chip">Fund Transfers</span>
+        <span class="feature-chip">Loan Management</span>
+        <span class="feature-chip">Transaction History</span>
+        <span class="feature-chip">Balance Summary</span>
+      </div>
+      <div class="project-action">
+        <button class="launch-btn">↗ Launch Banking System</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header">
+    <div class="section-tag">// 03 — Background</div>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-timeline">
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-year">2022 – 2026 (Pursuing)</div>
+      <div class="edu-school">Vellalar College of Engineering and Technology</div>
+      <div class="edu-degree">B.E. Computer Science & Engineering · Anna University</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-year">2020 – 2022</div>
+      <div class="edu-school">Kongu Vellalar Matriculation and Higher Secondary School</div>
+      <div class="edu-degree">HSC · Higher Secondary Certificate</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-year">2020</div>
+      <div class="edu-school">Kongu Vellalar Matriculation and Higher Secondary School</div>
+      <div class="edu-degree">SSLC · Secondary School Leaving Certificate</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <div class="section-tag">// 04 — Get In Touch</div>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <a href="tel:+918903492646" class="contact-card">
+      <div class="contact-icon">📞</div>
+      <div><div class="contact-label">Phone</div><div class="contact-value">+91 8903492646</div></div>
+    </a>
+    <a href="mailto:kgv2345@gmail.com" class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <div><div class="contact-label">Email</div><div class="contact-value">kgv2345@gmail.com</div></div>
+    </a>
+    <a href="https://linkedin.com/in/pravinsankar-a-g10588a286" target="_blank" class="contact-card">
+      <div class="contact-icon">💼</div>
+      <div><div class="contact-label">LinkedIn</div><div class="contact-value">pravinsankar-a-g</div></div>
+    </a>
+    <a href="https://github.com/pravinsankar48" target="_blank" class="contact-card">
+      <div class="contact-icon">⌥</div>
+      <div><div class="contact-label">GitHub</div><div class="contact-value">pravinsankar48</div></div>
+    </a>
+    <div class="contact-card" style="cursor:default;">
+      <div class="contact-icon">📍</div>
+      <div><div class="contact-label">Location</div><div class="contact-value">Erode, Tamil Nadu</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">Built with ♥ · Pravinsankar A.G · 2026</p>
+  <p style="color:#444">Software Developer · Java · SQL · DSA</p>
+</footer>
+
+<!-- ====== MODALS ====== -->
+
+<!-- LIBRARY MODAL -->
+<div class="modal-overlay" id="modal-library">
+  <div class="modal">
+    <div class="modal-nav">
+      <div>
+        <div class="modal-title">📚 Library Management System</div>
+        <div style="font-size:0.7rem;color:var(--muted)">Java + MySQL + JDBC</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('library')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="app-container">
+        <div class="app-header">
+          <div>
+            <div class="app-title">📚 Library System</div>
+            <div class="app-subtitle">Book Management · Issue & Return · Fine Tracking</div>
+          </div>
+        </div>
+        <div class="app-body" id="lib-app"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPENSE MODAL -->
+<div class="modal-overlay" id="modal-expense">
+  <div class="modal">
+    <div class="modal-nav">
+      <div>
+        <div class="modal-title">💰 Smart Expense Tracker</div>
+        <div style="font-size:0.7rem;color:var(--muted)">Java OOP · File Persistence · Collections</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('expense')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="app-container">
+        <div class="app-header">
+          <div>
+            <div class="app-title">💰 Expense Tracker + Calculator</div>
+            <div class="app-subtitle">CRUD · Monthly Reports · Built-in Calculator</div>
+          </div>
+        </div>
+        <div class="app-body" id="exp-app"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BANKING MODAL -->
+<div class="modal-overlay" id="modal-banking">
+  <div class="modal">
+    <div class="modal-nav">
+      <div>
+        <div class="modal-title">🏦 Banking System</div>
+        <div style="font-size:0.7rem;color:var(--muted)">Java OOP · Account Management · Transactions</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('banking')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="app-container">
+        <div class="app-header">
+          <div>
+            <div class="app-title">🏦 Banking System</div>
+            <div class="app-subtitle">Accounts · Deposits · Transfers · Loans</div>
+          </div>
+        </div>
+        <div class="app-body" id="bank-app"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// MODAL SYSTEM
+// ============================================================
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (id === 'library' && !window._libInit) { initLibrary(); window._libInit = true; }
+  if (id === 'expense' && !window._expInit) { initExpense(); window._expInit = true; }
+  if (id === 'banking' && !window._bankInit) { initBanking(); window._bankInit = true; }
+}
+function closeModal(id) {
+  document.getElementById('modal-' + id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('active') && (document.body.style.overflow = ''); });
+});
+
+// ============================================================
+// LIBRARY MANAGEMENT SYSTEM
+// ============================================================
+let libBooks = [
+  { id: 'B001', title: 'Clean Code', author: 'Robert C. Martin', genre: 'Programming', copies: 3, issued: 0 },
+  { id: 'B002', title: 'The Pragmatic Programmer', author: 'David Thomas', genre: 'Programming', copies: 2, issued: 1 },
+  { id: 'B003', title: 'Introduction to Algorithms', author: 'CLRS', genre: 'DSA', copies: 4, issued: 2 },
+  { id: 'B004', title: 'Database System Concepts', author: 'Silberschatz', genre: 'Database', copies: 2, issued: 0 },
+];
+let libMembers = [
+  { id: 'M001', name: 'Arun Kumar', email: 'arun@email.com' },
+  { id: 'M002', name: 'Priya Devi', email: 'priya@email.com' },
+  { id: 'M003', name: 'Ravi Raj', email: 'ravi@email.com' },
+];
+let libIssues = [
+  { issueId: 'I001', bookId: 'B002', memberId: 'M001', issueDate: '2026-03-10', dueDate: '2026-03-24', returned: false },
+  { issueId: 'I002', bookId: 'B003', memberId: 'M002', issueDate: '2026-03-01', dueDate: '2026-03-15', returned: false },
+  { issueId: 'I003', bookId: 'B003', memberId: 'M003', issueDate: '2026-03-20', dueDate: '2026-04-03', returned: true },
+];
+let libMsg = '';
+
+function initLibrary() {
+  renderLib();
+}
+
+function renderLib() {
+  const app = document.getElementById('lib-app');
+  const today = new Date('2026-04-05');
+  const available = libBooks.reduce((a, b) => a + (b.copies - b.issued), 0);
+  const totalIssued = libIssues.filter(i => !i.returned).length;
+  const overdue = libIssues.filter(i => !i.returned && new Date(i.dueDate) < today).length;
+  const fineTotal = libIssues.filter(i => !i.returned && new Date(i.dueDate) < today)
+    .reduce((sum, i) => sum + Math.floor((today - new Date(i.dueDate)) / 86400000) * 2, 0);
+
+  app.innerHTML = `
+    ${libMsg ? `<div class="alert alert-${libMsg.type}">${libMsg.text}</div>` : ''}
+    <div class="summary-cards">
+      <div class="summary-card"><div class="summary-label">Total Books</div><div class="summary-value cyan">${libBooks.length}</div></div>
+      <div class="summary-card"><div class="summary-label">Available Copies</div><div class="summary-value green">${available}</div></div>
+      <div class="summary-card"><div class="summary-label">Currently Issued</div><div class="summary-value yellow">${totalIssued}</div></div>
+      <div class="summary-card"><div class="summary-label">Overdue</div><div class="summary-value red">${overdue}</div></div>
+      <div class="summary-card"><div class="summary-label">Fine Due (₹)</div><div class="summary-value red">₹${fineTotal}</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="libTab('books',this)">📖 Books</button>
+      <button class="tab-btn" onclick="libTab('add-book',this)">➕ Add Book</button>
+      <button class="tab-btn" onclick="libTab('issue',this)">📤 Issue</button>
+      <button class="tab-btn" onclick="libTab('returns',this)">📥 Returns</button>
+      <button class="tab-btn" onclick="libTab('members',this)">👥 Members</button>
+    </div>
+
+    <div id="lib-tab-content">
+      ${libBooksTab()}
+    </div>
+  `;
+  libMsg = '';
+}
+
+function libTab(tab, btn) {
+  document.querySelectorAll('#lib-app .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const content = document.getElementById('lib-tab-content');
+  if (tab === 'books') content.innerHTML = libBooksTab();
+  if (tab === 'add-book') content.innerHTML = libAddBookTab();
+  if (tab === 'issue') content.innerHTML = libIssueTab();
+  if (tab === 'returns') content.innerHTML = libReturnsTab();
+  if (tab === 'members') content.innerHTML = libMembersTab();
+}
+
+function libBooksTab() {
+  const query = document.getElementById('lib-search-val') ? document.getElementById('lib-search-val').value.toLowerCase() : '';
+  const filtered = libBooks.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query) || b.id.toLowerCase().includes(query));
+  return `
+    <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
+      <input id="lib-search-val" class="form-control" placeholder="Search books by title, author, ID..." oninput="libSearchBooks(this.value)" style="flex:1">
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Copies</th><th>Available</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        ${filtered.map(b => `
+          <tr>
+            <td style="color:var(--accent)">${b.id}</td>
+            <td>${b.title}</td>
+            <td style="color:var(--muted)">${b.author}</td>
+            <td>${b.genre}</td>
+            <td>${b.copies}</td>
+            <td>${b.copies - b.issued}</td>
+            <td><span class="badge ${b.copies - b.issued > 0 ? 'badge-available' : 'badge-overdue'}">${b.copies - b.issued > 0 ? 'Available' : 'All Issued'}</span></td>
+            <td><button class="btn-sm btn-danger" onclick="libDeleteBook('${b.id}')">Delete</button></td>
+          </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function libSearchBooks(val) {
+  const filtered = libBooks.filter(b => b.title.toLowerCase().includes(val.toLowerCase()) || b.author.toLowerCase().includes(val.toLowerCase()) || b.id.toLowerCase().includes(val.toLowerCase()));
+  const tbody = document.querySelector('#lib-tab-content table tbody');
+  if (tbody) tbody.innerHTML = filtered.map(b => `
+    <tr>
+      <td style="color:var(--accent)">${b.id}</td>
+      <td>${b.title}</td>
+      <td style="color:var(--muted)">${b.author}</td>
+      <td>${b.genre}</td>
+      <td>${b.copies}</td>
+      <td>${b.copies - b.issued}</td>
+      <td><span class="badge ${b.copies - b.issued > 0 ? 'badge-available' : 'badge-overdue'}">${b.copies - b.issued > 0 ? 'Available' : 'All Issued'}</span></td>
+      <td><button class="btn-sm btn-danger" onclick="libDeleteBook('${b.id}')">Delete</button></td>
+    </tr>`).join('');
+}
+
+function libDeleteBook(id) {
+  libBooks = libBooks.filter(b => b.id !== id);
+  libMsg = { type: 'info', text: `Book ${id} deleted.` };
+  renderLib();
+}
+
+function libAddBookTab() {
+  return `
+    <div class="form-grid" style="max-width:500px">
+      <div class="form-row">
+        <div class="form-group"><label>Book ID</label><input class="form-control" id="lb-id" placeholder="B005"></div>
+        <div class="form-group"><label>Genre</label><input class="form-control" id="lb-genre" placeholder="Fiction"></div>
+      </div>
+      <div class="form-group"><label>Title</label><input class="form-control" id="lb-title" placeholder="Book Title"></div>
+      <div class="form-group"><label>Author</label><input class="form-control" id="lb-author" placeholder="Author Name"></div>
+      <div class="form-group"><label>Number of Copies</label><input class="form-control" id="lb-copies" type="number" value="1" min="1"></div>
+      <div><button class="btn-sm btn-accent" onclick="libAddBook()">➕ Add Book</button></div>
+    </div>`;
+}
+
+function libAddBook() {
+  const id = document.getElementById('lb-id').value.trim();
+  const title = document.getElementById('lb-title').value.trim();
+  const author = document.getElementById('lb-author').value.trim();
+  const genre = document.getElementById('lb-genre').value.trim();
+  const copies = parseInt(document.getElementById('lb-copies').value) || 1;
+  if (!id || !title || !author) { libMsg = { type: 'danger', text: 'Please fill ID, Title and Author.' }; renderLib(); return; }
+  if (libBooks.find(b => b.id === id)) { libMsg = { type: 'danger', text: `Book ID ${id} already exists.` }; renderLib(); return; }
+  libBooks.push({ id, title, author, genre: genre || 'General', copies, issued: 0 });
+  libMsg = { type: 'success', text: `Book "${title}" added successfully!` };
+  renderLib();
+}
+
+function libIssueTab() {
+  return `
+    <div class="form-grid" style="max-width:500px">
+      <div class="form-row">
+        <div class="form-group"><label>Book ID</label>
+          <select class="form-control" id="li-book">
+            <option value="">Select Book</option>
+            ${libBooks.filter(b => b.copies - b.issued > 0).map(b => `<option value="${b.id}">${b.id} - ${b.title} (${b.copies - b.issued} left)</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label>Member ID</label>
+          <select class="form-control" id="li-member">
+            <option value="">Select Member</option>
+            ${libMembers.map(m => `<option value="${m.id}">${m.id} - ${m.name}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Due Date</label><input type="date" class="form-control" id="li-due" value="2026-04-19"></div>
+      <div><button class="btn-sm btn-accent" onclick="libIssueBook()">📤 Issue Book</button></div>
+    </div>
+    <div style="margin-top:1.5rem;overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>Issue ID</th><th>Book</th><th>Member</th><th>Issue Date</th><th>Due Date</th><th>Status</th></tr></thead>
+      <tbody>
+        ${libIssues.filter(i => !i.returned).map(i => {
+          const b = libBooks.find(b => b.id === i.bookId);
+          const m = libMembers.find(m => m.id === i.memberId);
+          const overdue = new Date(i.dueDate) < new Date('2026-04-05');
+          return `<tr>
+            <td style="color:var(--accent)">${i.issueId}</td>
+            <td>${b ? b.title : i.bookId}</td>
+            <td>${m ? m.name : i.memberId}</td>
+            <td>${i.issueDate}</td>
+            <td>${i.dueDate}</td>
+            <td><span class="badge ${overdue ? 'badge-overdue' : 'badge-issued'}">${overdue ? 'OVERDUE' : 'Issued'}</span></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function libIssueBook() {
+  const bookId = document.getElementById('li-book').value;
+  const memberId = document.getElementById('li-member').value;
+  const dueDate = document.getElementById('li-due').value;
+  if (!bookId || !memberId || !dueDate) { libMsg = { type: 'danger', text: 'Please select book, member and due date.' }; renderLib(); return; }
+  const b = libBooks.find(b => b.id === bookId);
+  if (b) b.issued++;
+  const issueId = 'I' + String(libIssues.length + 1).padStart(3, '0');
+  libIssues.push({ issueId, bookId, memberId, issueDate: '2026-04-05', dueDate, returned: false });
+  libMsg = { type: 'success', text: `Book issued! ID: ${issueId}. Fine: ₹2/day after due date.` };
+  renderLib();
+}
+
+function libReturnsTab() {
+  const today = new Date('2026-04-05');
+  return `
+    <div class="form-grid" style="max-width:400px;margin-bottom:1.5rem">
+      <div class="form-group"><label>Issue ID</label>
+        <select class="form-control" id="lr-issue">
+          <option value="">Select Active Issue</option>
+          ${libIssues.filter(i => !i.returned).map(i => {
+            const b = libBooks.find(b => b.id === i.bookId);
+            return `<option value="${i.issueId}">${i.issueId} - ${b ? b.title : i.bookId}</option>`;
+          }).join('')}
+        </select>
+      </div>
+      <div><button class="btn-sm btn-success" onclick="libReturnBook()">📥 Process Return</button></div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>Issue ID</th><th>Book</th><th>Member</th><th>Due Date</th><th>Status</th><th>Fine</th></tr></thead>
+      <tbody>
+        ${libIssues.map(i => {
+          const b = libBooks.find(b => b.id === i.bookId);
+          const m = libMembers.find(m => m.id === i.memberId);
+          const daysLate = Math.max(0, Math.floor((today - new Date(i.dueDate)) / 86400000));
+          const fine = i.returned ? 0 : daysLate * 2;
+          return `<tr>
+            <td style="color:var(--accent)">${i.issueId}</td>
+            <td>${b ? b.title : i.bookId}</td>
+            <td>${m ? m.name : i.memberId}</td>
+            <td>${i.dueDate}</td>
+            <td><span class="badge ${i.returned ? 'badge-available' : daysLate > 0 ? 'badge-overdue' : 'badge-issued'}">${i.returned ? 'Returned' : daysLate > 0 ? 'OVERDUE' : 'Active'}</span></td>
+            <td style="color:${fine > 0 ? 'var(--danger)' : 'var(--muted)'}">₹${fine}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function libReturnBook() {
+  const issueId = document.getElementById('lr-issue').value;
+  if (!issueId) { libMsg = { type: 'danger', text: 'Select an issue to return.' }; renderLib(); return; }
+  const issue = libIssues.find(i => i.issueId === issueId);
+  if (issue) {
+    issue.returned = true;
+    const b = libBooks.find(b => b.id === issue.bookId);
+    if (b) b.issued = Math.max(0, b.issued - 1);
+    const daysLate = Math.max(0, Math.floor((new Date('2026-04-05') - new Date(issue.dueDate)) / 86400000));
+    const fine = daysLate * 2;
+    libMsg = { type: 'success', text: `Book returned! ${fine > 0 ? `Fine collected: ₹${fine}` : 'No fine due.'}` };
+  }
+  renderLib();
+}
+
+function libMembersTab() {
+  return `
+    <div class="form-grid" style="max-width:500px;margin-bottom:1.5rem">
+      <div class="form-row">
+        <div class="form-group"><label>Member ID</label><input class="form-control" id="lm-id" placeholder="M004"></div>
+        <div class="form-group"><label>Name</label><input class="form-control" id="lm-name" placeholder="Member Name"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input class="form-control" id="lm-email" placeholder="email@example.com"></div>
+      <div><button class="btn-sm btn-accent" onclick="libAddMember()">➕ Add Member</button></div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Active Issues</th><th>Action</th></tr></thead>
+      <tbody>
+        ${libMembers.map(m => {
+          const active = libIssues.filter(i => i.memberId === m.id && !i.returned).length;
+          return `<tr>
+            <td style="color:var(--accent)">${m.id}</td>
+            <td>${m.name}</td>
+            <td style="color:var(--muted)">${m.email}</td>
+            <td>${active}</td>
+            <td><button class="btn-sm btn-danger" onclick="libDeleteMember('${m.id}')">Remove</button></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function libAddMember() {
+  const id = document.getElementById('lm-id').value.trim();
+  const name = document.getElementById('lm-name').value.trim();
+  const email = document.getElementById('lm-email').value.trim();
+  if (!id || !name) { libMsg = { type: 'danger', text: 'ID and Name are required.' }; renderLib(); return; }
+  if (libMembers.find(m => m.id === id)) { libMsg = { type: 'danger', text: `Member ${id} already exists.` }; renderLib(); return; }
+  libMembers.push({ id, name, email });
+  libMsg = { type: 'success', text: `Member "${name}" added!` };
+  renderLib();
+}
+function libDeleteMember(id) {
+  libMembers = libMembers.filter(m => m.id !== id);
+  libMsg = { type: 'info', text: `Member ${id} removed.` };
+  renderLib();
+}
+
+// ============================================================
+// SMART EXPENSE TRACKER
+// ============================================================
+let expenses = [
+  { id: 'E001', desc: 'College Canteen', category: 'Food', amount: 350, date: '2026-04-01', type: 'expense' },
+  { id: 'E002', desc: 'Bus Pass', category: 'Transport', amount: 500, date: '2026-04-01', type: 'expense' },
+  { id: 'E003', desc: 'Internship Stipend', category: 'Income', amount: 5000, date: '2026-04-01', type: 'income' },
+  { id: 'E004', desc: 'Programming Books', category: 'Education', amount: 800, date: '2026-04-02', type: 'expense' },
+  { id: 'E005', desc: 'Mobile Recharge', category: 'Bills', amount: 299, date: '2026-04-03', type: 'expense' },
+  { id: 'E006', desc: 'Freelance Project', category: 'Income', amount: 3000, date: '2026-04-04', type: 'income' },
+];
+let expMsg = '';
+let calcExpr = '';
+let calcDisplay = '0';
+
+function initExpense() { renderExpense(); }
+
+function renderExpense() {
+  const app = document.getElementById('exp-app');
+  const income = expenses.filter(e => e.type === 'income').reduce((s, e) => s + e.amount, 0);
+  const spent = expenses.filter(e => e.type === 'expense').reduce((s, e) => s + e.amount, 0);
+  const balance = income - spent;
+
+  const catMap = {};
+  expenses.filter(e => e.type === 'expense').forEach(e => { catMap[e.category] = (catMap[e.category] || 0) + e.amount; });
+
+  app.innerHTML = `
+    ${expMsg ? `<div class="alert alert-${expMsg.type}">${expMsg.text}</div>` : ''}
+    <div class="summary-cards">
+      <div class="summary-card"><div class="summary-label">Balance</div><div class="summary-value ${balance >= 0 ? 'green' : 'red'}">₹${balance.toLocaleString()}</div></div>
+      <div class="summary-card"><div class="summary-label">Total Income</div><div class="summary-value green">₹${income.toLocaleString()}</div></div>
+      <div class="summary-card"><div class="summary-label">Total Spent</div><div class="summary-value red">₹${spent.toLocaleString()}</div></div>
+      <div class="summary-card"><div class="summary-label">Transactions</div><div class="summary-value cyan">${expenses.length}</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="expTab('list',this)">📋 Transactions</button>
+      <button class="tab-btn" onclick="expTab('add',this)">➕ Add</button>
+      <button class="tab-btn" onclick="expTab('report',this)">📊 Report</button>
+      <button class="tab-btn" onclick="expTab('calc',this)">🧮 Calculator</button>
+    </div>
+    <div id="exp-tab-content">${expListTab()}</div>`;
+  expMsg = '';
+}
+
+function expTab(tab, btn) {
+  document.querySelectorAll('#exp-app .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const c = document.getElementById('exp-tab-content');
+  if (tab === 'list') c.innerHTML = expListTab();
+  if (tab === 'add') c.innerHTML = expAddTab();
+  if (tab === 'report') c.innerHTML = expReportTab();
+  if (tab === 'calc') c.innerHTML = expCalcTab();
+}
+
+function expListTab() {
+  return `
+    <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Description</th><th>Category</th><th>Date</th><th>Type</th><th>Amount</th><th>Action</th></tr></thead>
+      <tbody>
+        ${[...expenses].reverse().map(e => `
+          <tr>
+            <td style="color:var(--accent)">${e.id}</td>
+            <td>${e.desc}</td>
+            <td>${e.category}</td>
+            <td style="color:var(--muted)">${e.date}</td>
+            <td><span class="badge ${e.type === 'income' ? 'badge-savings' : 'badge-overdue'}">${e.type}</span></td>
+            <td style="color:${e.type === 'income' ? 'var(--success)' : 'var(--danger)'}; font-weight:600">${e.type === 'income' ? '+' : '-'}₹${e.amount.toLocaleString()}</td>
+            <td><button class="btn-sm btn-danger" onclick="expDelete('${e.id}')">Delete</button></td>
+          </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function expAddTab() {
+  return `
+    <div class="form-grid" style="max-width:500px">
+      <div class="form-row">
+        <div class="form-group"><label>Type</label>
+          <select class="form-control" id="et-type">
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Category</label>
+          <select class="form-control" id="et-cat">
+            <option>Food</option><option>Transport</option><option>Education</option>
+            <option>Bills</option><option>Entertainment</option><option>Health</option>
+            <option>Shopping</option><option>Income</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Description</label><input class="form-control" id="et-desc" placeholder="What did you spend on?"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Amount (₹)</label><input class="form-control" id="et-amt" type="number" placeholder="0.00"></div>
+        <div class="form-group"><label>Date</label><input type="date" class="form-control" id="et-date" value="2026-04-05"></div>
+      </div>
+      <div><button class="btn-sm btn-accent" onclick="expAdd()">➕ Add Transaction</button></div>
+    </div>`;
+}
+
+function expAdd() {
+  const type = document.getElementById('et-type').value;
+  const cat = document.getElementById('et-cat').value;
+  const desc = document.getElementById('et-desc').value.trim();
+  const amt = parseFloat(document.getElementById('et-amt').value);
+  const date = document.getElementById('et-date').value;
+  if (!desc || !amt || !date) { expMsg = { type: 'danger', text: 'Fill all fields.' }; renderExpense(); return; }
+  const id = 'E' + String(expenses.length + 1).padStart(3, '0');
+  expenses.push({ id, desc, category: cat, amount: amt, date, type });
+  expMsg = { type: 'success', text: `Transaction "${desc}" added!` };
+  renderExpense();
+}
+
+function expDelete(id) {
+  expenses = expenses.filter(e => e.id !== id);
+  expMsg = { type: 'info', text: `Transaction ${id} deleted.` };
+  renderExpense();
+}
+
+function expReportTab() {
+  const catMap = {};
+  expenses.filter(e => e.type === 'expense').forEach(e => { catMap[e.category] = (catMap[e.category] || 0) + e.amount; });
+  const total = Object.values(catMap).reduce((a, b) => a + b, 0);
+  const colors = ['var(--accent)', 'var(--accent2)', 'var(--accent3)', 'var(--success)', 'var(--danger)', '#a78bfa', '#f472b6', '#34d399'];
+  return `
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:0.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem">Category-wise Expense Report</div>
+      ${Object.entries(catMap).map(([cat, amt], i) => `
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;font-size:0.78rem">
+            <span>${cat}</span><span style="color:${colors[i%colors.length]}">₹${amt.toLocaleString()} (${Math.round(amt/total*100)}%)</span>
+          </div>
+          <div style="height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden">
+            <div style="width:${Math.round(amt/total*100)}%;height:100%;background:${colors[i%colors.length]};border-radius:4px;transition:width 0.5s"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>Category</th><th>Transactions</th><th>Total</th><th>% Share</th></tr></thead>
+      <tbody>
+        ${Object.entries(catMap).map(([cat, amt], i) => `
+          <tr>
+            <td style="color:${colors[i%colors.length]}">${cat}</td>
+            <td>${expenses.filter(e => e.category === cat).length}</td>
+            <td>₹${amt.toLocaleString()}</td>
+            <td>${Math.round(amt/total*100)}%</td>
+          </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function expCalcTab() {
+  return `
+    <div class="calc-wrap">
+      <div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:1px;text-transform:uppercase">Quick Expense Calculator</div>
+        <div class="calc-display">
+          <div class="calc-expr" id="calc-expr">${calcExpr || ''}</div>
+          <div class="calc-result" id="calc-result">${calcDisplay}</div>
+        </div>
+        <div class="calc-grid">
+          <button class="calc-key clear" onclick="calcKey('AC')">AC</button>
+          <button class="calc-key op" onclick="calcKey('±')">±</button>
+          <button class="calc-key op" onclick="calcKey('%')">%</button>
+          <button class="calc-key op" onclick="calcKey('/')">÷</button>
+          <button class="calc-key" onclick="calcKey('7')">7</button>
+          <button class="calc-key" onclick="calcKey('8')">8</button>
+          <button class="calc-key" onclick="calcKey('9')">9</button>
+          <button class="calc-key op" onclick="calcKey('*')">×</button>
+          <button class="calc-key" onclick="calcKey('4')">4</button>
+          <button class="calc-key" onclick="calcKey('5')">5</button>
+          <button class="calc-key" onclick="calcKey('6')">6</button>
+          <button class="calc-key op" onclick="calcKey('-')">−</button>
+          <button class="calc-key" onclick="calcKey('1')">1</button>
+          <button class="calc-key" onclick="calcKey('2')">2</button>
+          <button class="calc-key" onclick="calcKey('3')">3</button>
+          <button class="calc-key op" onclick="calcKey('+')">+</button>
+          <button class="calc-key span2" onclick="calcKey('0')">0</button>
+          <button class="calc-key" onclick="calcKey('.')">.</button>
+          <button class="calc-key eq" onclick="calcKey('=')">=</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:1px;text-transform:uppercase">Quick Add to Tracker</div>
+        <div class="form-grid">
+          <div class="form-group"><label>Use Result As</label><input class="form-control" id="calc-desc" placeholder="e.g. Lunch, Bus fare..."></div>
+          <div class="form-group"><label>Amount</label><input class="form-control" id="calc-amt" type="number" placeholder="Will fill from calc"></div>
+          <div class="form-group"><label>Category</label>
+            <select class="form-control" id="calc-cat">
+              <option>Food</option><option>Transport</option><option>Education</option><option>Bills</option><option>Other</option>
+            </select>
+          </div>
+          <button class="btn-sm btn-accent" onclick="calcAddExpense()">➕ Add as Expense</button>
+          <button class="btn-sm btn-success" onclick="calcFill()">↙ Use Calculator Result</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function calcKey(key) {
+  if (key === 'AC') { calcExpr = ''; calcDisplay = '0'; }
+  else if (key === '=') {
+    try {
+      const result = Function('"use strict"; return (' + calcExpr + ')')();
+      calcDisplay = parseFloat(result.toFixed(8)).toString();
+      calcExpr = calcDisplay;
+    } catch { calcDisplay = 'Error'; calcExpr = ''; }
+  } else if (key === '±') {
+    calcDisplay = calcDisplay.startsWith('-') ? calcDisplay.slice(1) : '-' + calcDisplay;
+    calcExpr = calcDisplay;
+  } else if (key === '%') {
+    try { calcDisplay = (parseFloat(calcDisplay) / 100).toString(); calcExpr = calcDisplay; } catch {}
+  } else {
+    if (['+','-','*','/'].includes(key)) {
+      calcDisplay = key; calcExpr += key;
+    } else {
+      if (calcDisplay === '0' || ['+','-','*','/'].includes(calcDisplay)) calcDisplay = key;
+      else calcDisplay += key;
+      calcExpr += key;
+    }
+  }
+  const d = document.getElementById('calc-result');
+  const e = document.getElementById('calc-expr');
+  if (d) d.textContent = calcDisplay;
+  if (e) e.textContent = calcExpr;
+}
+
+function calcFill() {
+  const amt = document.getElementById('calc-amt');
+  if (amt && calcDisplay !== 'Error') amt.value = calcDisplay;
+}
+
+function calcAddExpense() {
+  const desc = document.getElementById('calc-desc').value.trim();
+  const amt = parseFloat(document.getElementById('calc-amt').value);
+  const cat = document.getElementById('calc-cat').value;
+  if (!desc || !amt) { expMsg = { type: 'danger', text: 'Fill description and amount.' }; renderExpense(); return; }
+  const id = 'E' + String(expenses.length + 1).padStart(3, '0');
+  expenses.push({ id, desc, category: cat, amount: amt, date: '2026-04-05', type: 'expense' });
+  expMsg = { type: 'success', text: `Expense "₹${amt} - ${desc}" added!` };
+  renderExpense();
+}
+
+// ============================================================
+// BANKING SYSTEM
+// ============================================================
+let bankAccounts = [
+  { id: 'ACC001', holder: 'Pravinsankar A.G', type: 'savings', balance: 45000, pin: '1234', created: '2024-01-15' },
+  { id: 'ACC002', holder: 'Arun Kumar', type: 'checking', balance: 12500, pin: '5678', created: '2024-03-20' },
+  { id: 'ACC003', holder: 'Priya Devi', type: 'savings', balance: 87000, pin: '9012', created: '2023-11-10' },
+];
+let bankTxns = [
+  { id: 'T001', accId: 'ACC001', type: 'credit', amount: 5000, desc: 'Stipend', date: '2026-04-01', balance: 45000 },
+  { id: 'T002', accId: 'ACC001', type: 'debit', amount: 500, desc: 'ATM Withdrawal', date: '2026-04-02', balance: 44500 },
+  { id: 'T003', accId: 'ACC002', type: 'credit', amount: 12500, desc: 'Salary', date: '2026-04-01', balance: 12500 },
+];
+let bankLoans = [
+  { id: 'L001', accId: 'ACC001', amount: 50000, remaining: 35000, emi: 2500, type: 'Education', status: 'active' },
+];
+let bankMsg = '';
+let bankActiveAcc = null;
+
+function initBanking() { renderBanking(); }
+
+function renderBanking() {
+  const app = document.getElementById('bank-app');
+  const totalDeposits = bankAccounts.reduce((s, a) => s + a.balance, 0);
+  const totalLoans = bankLoans.filter(l => l.status === 'active').reduce((s, l) => s + l.remaining, 0);
+
+  app.innerHTML = `
+    ${bankMsg ? `<div class="alert alert-${bankMsg.type}">${bankMsg.text}</div>` : ''}
+    <div class="summary-cards">
+      <div class="summary-card"><div class="summary-label">Accounts</div><div class="summary-value cyan">${bankAccounts.length}</div></div>
+      <div class="summary-card"><div class="summary-label">Total Deposits</div><div class="summary-value green">₹${totalDeposits.toLocaleString()}</div></div>
+      <div class="summary-card"><div class="summary-label">Active Loans</div><div class="summary-value yellow">${bankLoans.filter(l => l.status === 'active').length}</div></div>
+      <div class="summary-card"><div class="summary-label">Loan Exposure</div><div class="summary-value red">₹${totalLoans.toLocaleString()}</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="bankTab('accounts',this)">🏦 Accounts</button>
+      <button class="tab-btn" onclick="bankTab('open',this)">➕ Open Account</button>
+      <button class="tab-btn" onclick="bankTab('txn',this)">💸 Transactions</button>
+      <button class="tab-btn" onclick="bankTab('transfer',this)">↔ Transfer</button>
+      <button class="tab-btn" onclick="bankTab('loans',this)">📋 Loans</button>
+      <button class="tab-btn" onclick="bankTab('history',this)">📜 History</button>
+    </div>
+    <div id="bank-tab-content">${bankAccountsTab()}</div>`;
+  bankMsg = '';
+}
+
+function bankTab(tab, btn) {
+  document.querySelectorAll('#bank-app .tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const c = document.getElementById('bank-tab-content');
+  if (tab === 'accounts') c.innerHTML = bankAccountsTab();
+  if (tab === 'open') c.innerHTML = bankOpenTab();
+  if (tab === 'txn') c.innerHTML = bankTxnTab();
+  if (tab === 'transfer') c.innerHTML = bankTransferTab();
+  if (tab === 'loans') c.innerHTML = bankLoansTab();
+  if (tab === 'history') c.innerHTML = bankHistoryTab();
+}
+
+function bankAccountsTab() {
+  return `
+    <div style="overflow-x:auto;">
+    <table class="data-table">
+      <thead><tr><th>Account No</th><th>Holder</th><th>Type</th><th>Balance</th><th>Since</th><th>Action</th></tr></thead>
+      <tbody>
+        ${bankAccounts.map(a => `
+          <tr>
+            <td style="color:var(--accent)">${a.id}</td>
+            <td>${a.holder}</td>
+            <td><span class="badge badge-${a.type}">${a.type}</span></td>
+            <td style="color:var(--success);font-weight:600">₹${a.balance.toLocaleString()}</td>
+            <td style="color:var(--muted)">${a.created}</td>
+            <td style="display:flex;gap:0.4rem;flex-wrap:wrap">
+              <button class="btn-sm btn-success" onclick="bankQuickOp('${a.id}','deposit')">+ Deposit</button>
+              <button class="btn-sm btn-danger" onclick="bankQuickOp('${a.id}','withdraw')">- Withdraw</button>
+              <button class="btn-sm btn-warn" onclick="bankClose('${a.id}')">Close</button>
+            </td>
+          </tr>`).join('')}
+      </tbody>
+    </table></div>
+    <div id="bank-quick-op" style="margin-top:1rem"></div>`;
+}
+
+function bankQuickOp(accId, op) {
+  document.getElementById('bank-quick-op').innerHTML = `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;max-width:400px">
+      <div style="font-size:0.8rem;margin-bottom:1rem;color:var(--accent)">${op === 'deposit' ? '+ Deposit to' : '- Withdraw from'} ${accId}</div>
+      <div class="form-group" style="margin-bottom:0.75rem"><label>Amount (₹)</label><input class="form-control" id="bq-amt" type="number" placeholder="Enter amount"></div>
+      <div class="form-group" style="margin-bottom:0.75rem"><label>Description</label><input class="form-control" id="bq-desc" placeholder="e.g. ATM, Salary..."></div>
+      <button class="btn-sm btn-accent" onclick="bankDoOp('${accId}','${op}')">${op === 'deposit' ? '✓ Deposit' : '✓ Withdraw'}</button>
+    </div>`;
+}
+
+function bankDoOp(accId, op) {
+  const amt = parseFloat(document.getElementById('bq-amt').value);
+  const desc = document.getElementById('bq-desc').value.trim() || (op === 'deposit' ? 'Deposit' : 'Withdrawal');
+  if (!amt || amt <= 0) { bankMsg = { type: 'danger', text: 'Enter valid amount.' }; renderBanking(); return; }
+  const acc = bankAccounts.find(a => a.id === accId);
+  if (!acc) return;
+  if (op === 'withdraw' && acc.balance < amt) { bankMsg = { type: 'danger', text: 'Insufficient balance!' }; renderBanking(); return; }
+  if (op === 'deposit') acc.balance += amt;
+  else acc.balance -= amt;
+  const txnId = 'T' + String(bankTxns.length + 1).padStart(3, '0');
+  bankTxns.push({ id: txnId, accId, type: op === 'deposit' ? 'credit' : 'debit', amount: amt, desc, date: '2026-04-05', balance: acc.balance });
+  bankMsg = { type: 'success', text: `${op === 'deposit' ? 'Deposited' : 'Withdrawn'} ₹${amt.toLocaleString()}. New balance: ₹${acc.balance.toLocaleString()}` };
+  renderBanking();
+}
+
+function bankClose(accId) {
+  const acc = bankAccounts.find(a => a.id === accId);
+  if (!acc) return;
+  if (acc.balance > 0) { bankMsg = { type: 'danger', text: `Cannot close account with balance ₹${acc.balance.toLocaleString()}. Withdraw first.` }; renderBanking(); return; }
+  bankAccounts = bankAccounts.filter(a => a.id !== accId);
+  bankMsg = { type: 'info', text: `Account ${accId} closed.` };
+  renderBanking();
+}
+
+function bankOpenTab() {
+  return `
+    <div class="form-grid" style="max-width:500px">
+      <div class="form-group"><label>Account Holder Name</label><input class="form-control" id="bo-name" placeholder="Full Name"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Account Type</label>
+          <select class="form-control" id="bo-type">
+            <option value="savings">Savings</option>
+            <option value="checking">Checking</option>
+            <option value="loan">Loan</option>
+            <option value="credit">Credit</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Initial Deposit (₹)</label><input class="form-control" id="bo-deposit" type="number" placeholder="Min ₹500"></div>
+      </div>
+      <div class="form-group"><label>4-digit PIN</label><input class="form-control" id="bo-pin" type="password" maxlength="4" placeholder="****"></div>
+      <div><button class="btn-sm btn-accent" onclick="bankOpenAccount()">🏦 Open Account</button></div>
+    </div>`;
+}
+
+function bankOpenAccount() {
+  const name = document.getElementById('bo-name').value.trim();
+  const type = document.getElementById('bo-type').value;
+  const deposit = parseFloat(document.getElementById('bo-deposit').value);
+  const pin = document.getElementById('bo-pin').value;
+  if (!name || !deposit || !pin) { bankMsg = { type: 'danger', text: 'Fill all fields.' }; renderBanking(); return; }
+  if (deposit < 500) { bankMsg = { type: 'danger', text: 'Minimum initial deposit is ₹500.' }; renderBanking(); return; }
+  if (pin.length !== 4) { bankMsg = { type: 'danger', text: 'PIN must be 4 digits.' }; renderBanking(); return; }
+  const id = 'ACC' + String(bankAccounts.length + 1).padStart(3, '0');
+  bankAccounts.push({ id, holder: name, type, balance: deposit, pin, created: '2026-04-05' });
+  const txnId = 'T' + String(bankTxns.length + 1).padStart(3, '0');
+  bankTxns.push({ id: txnId, accId: id, type: 'credit', amount: deposit, desc: 'Initial Deposit', date: '2026-04-05', balance: deposit });
+  bankMsg = { type: 'success', text: `Account ${id} opened for ${name}! Initial balance: ₹${deposit.toLocaleString()}` };
+  renderBanking();
+}
+
+function bankTxnTab() {
+  return `<div id="bank-quick-op" style="margin-bottom:1rem">
+    <div class="form-grid" style="max-width:400px">
+      <div class="form-row">
+        <div class="form-group"><label>Account</label>
+          <select class="form-control" id="bt-acc">
+            <option value="">All Accounts</option>
+            ${bankAccounts.map(a => `<option value="${a.id}">${a.id} - ${a.holder}</option>`).join('')}
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end"><button class="btn-sm btn-accent" onclick="bankFilterTxn()">Filter</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="bank-txn-list">${bankTxnList(bankTxns)}</div>`;
+}
+
+function bankFilterTxn() {
+  const accId = document.getElementById('bt-acc').value;
+  const filtered = accId ? bankTxns.filter(t => t.accId === accId) : bankTxns;
+  document.getElementById('bank-txn-list').innerHTML = bankTxnList(filtered);
+}
+
+function bankTxnList(txns) {
+  return `<div style="overflow-x:auto;"><table class="data-table">
+    <thead><tr><th>Txn ID</th><th>Account</th><th>Type</th><th>Description</th><th>Date</th><th>Amount</th><th>Balance</th></tr></thead>
+    <tbody>
+      ${[...txns].reverse().map(t => `<tr>
+        <td style="color:var(--accent)">${t.id}</td>
+        <td>${t.accId}</td>
+        <td><span class="badge ${t.type === 'credit' ? 'badge-savings' : 'badge-overdue'}">${t.type}</span></td>
+        <td>${t.desc}</td>
+        <td style="color:var(--muted)">${t.date}</td>
+        <td style="color:${t.type === 'credit' ? 'var(--success)' : 'var(--danger)'};font-weight:600">${t.type === 'credit' ? '+' : '-'}₹${t.amount.toLocaleString()}</td>
+        <td>₹${t.balance.toLocaleString()}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table></div>`;
+}
+
+function bankTransferTab() {
+  return `
+    <div class="form-grid" style="max-width:500px">
+      <div class="form-group"><label>From Account</label>
+        <select class="form-control" id="btr-from">
+          <option value="">Select Source</option>
+          ${bankAccounts.map(a => `<option value="${a.id}">${a.id} - ${a.holder} (₹${a.balance.toLocaleString()})</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group"><label>To Account</label>
+        <select class="form-control" id="btr-to">
+          <option value="">Select Destination</option>
+          ${bankAccounts.map(a => `<option value="${a.id}">${a.id} - ${a.holder}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Amount (₹)</label><input class="form-control" id="btr-amt" type="number" placeholder="Amount"></div>
+        <div class="form-group"><label>Remark</label><input class="form-control" id="btr-remark" placeholder="e.g. Rent, Loan..."></div>
+      </div>
+      <div><button class="btn-sm btn-accent" onclick="bankDoTransfer()">↔ Transfer Funds</button></div>
+    </div>`;
+}
+
+function bankDoTransfer() {
+  const fromId = document.getElementById('btr-from').value;
+  const toId = document.getElementById('btr-to').value;
+  const amt = parseFloat(document.getElementById('btr-amt').value);
+  const remark = document.getElementById('btr-remark').value.trim() || 'Fund Transfer';
+  if (!fromId || !toId || !amt) { bankMsg = { type: 'danger', text: 'Fill all fields.' }; renderBanking(); return; }
+  if (fromId === toId) { bankMsg = { type: 'danger', text: 'Cannot transfer to same account.' }; renderBanking(); return; }
+  const from = bankAccounts.find(a => a.id === fromId);
+  const to = bankAccounts.find(a => a.id === toId);
+  if (from.balance < amt) { bankMsg = { type: 'danger', text: 'Insufficient balance.' }; renderBanking(); return; }
+  from.balance -= amt; to.balance += amt;
+  const t1 = 'T' + String(bankTxns.length + 1).padStart(3, '0');
+  bankTxns.push({ id: t1, accId: fromId, type: 'debit', amount: amt, desc: `Transfer to ${toId}: ${remark}`, date: '2026-04-05', balance: from.balance });
+  const t2 = 'T' + String(bankTxns.length + 1).padStart(3, '0');
+  bankTxns.push({ id: t2, accId: toId, type: 'credit', amount: amt, desc: `Transfer from ${fromId}: ${remark}`, date: '2026-04-05', balance: to.balance });
+  bankMsg = { type: 'success', text: `₹${amt.toLocaleString()} transferred from ${fromId} to ${toId} successfully!` };
+  renderBanking();
+}
+
+function bankLoansTab() {
+  return `
+    <div class="form-grid" style="max-width:500px;margin-bottom:1.5rem">
+      <div class="form-row">
+        <div class="form-group"><label>Account</label>
+          <select class="form-control" id="bl-acc">
+            ${bankAccounts.map(a => `<option value="${a.id}">${a.id} - ${a.holder}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group"><label>Loan Type</label>
+          <select class="form-control" id="bl-type">
+            <option>Education</option><option>Personal</option><option>Home</option><option>Vehicle</option><option>Business</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Loan Amount (₹)</label><input class="form-control" id="bl-amt" type="number" placeholder="Amount"></div>
+        <div class="form-group"><label>Monthly EMI (₹)</label><input class="form-control" id="bl-emi" type="number" placeholder="EMI"></div>
+      </div>
+      <div><button class="btn-sm btn-accent" onclick="bankApplyLoan()">Apply Loan</button></div>
+    </div>
+    <div style="overflow-x:auto;"><table class="data-table">
+      <thead><tr><th>Loan ID</th><th>Account</th><th>Type</th><th>Total</th><th>Remaining</th><th>EMI</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>
+        ${bankLoans.map(l => `<tr>
+          <td style="color:var(--accent)">${l.id}</td>
+          <td>${l.accId}</td>
+          <td>${l.type}</td>
+          <td>₹${l.amount.toLocaleString()}</td>
+          <td style="color:var(--warning)">₹${l.remaining.toLocaleString()}</td>
+          <td>₹${l.emi.toLocaleString()}/mo</td>
+          <td><span class="badge ${l.status === 'active' ? 'badge-issued' : 'badge-savings'}">${l.status}</span></td>
+          <td><button class="btn-sm btn-success" onclick="bankPayEMI('${l.id}')">Pay EMI</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function bankApplyLoan() {
+  const accId = document.getElementById('bl-acc').value;
+  const type = document.getElementById('bl-type').value;
+  const amt = parseFloat(document.getElementById('bl-amt').value);
+  const emi = parseFloat(document.getElementById('bl-emi').value);
+  if (!accId || !amt || !emi) { bankMsg = { type: 'danger', text: 'Fill all fields.' }; renderBanking(); return; }
+  const acc = bankAccounts.find(a => a.id === accId);
+  acc.balance += amt;
+  const id = 'L' + String(bankLoans.length + 1).padStart(3, '0');
+  bankLoans.push({ id, accId, amount: amt, remaining: amt, emi, type, status: 'active' });
+  const txnId = 'T' + String(bankTxns.length + 1).padStart(3, '0');
+  bankTxns.push({ id: txnId, accId, type: 'credit', amount: amt, desc: `${type} Loan Disbursed`, date: '2026-04-05', balance: acc.balance });
+  bankMsg = { type: 'success', text: `Loan ${id} approved! ₹${amt.toLocaleString()} credited to ${accId}.` };
+  renderBanking();
+}
+
+function bankPayEMI(loanId) {
+  const loan = bankLoans.find(l => l.id === loanId);
+  if (!loan || loan.status !== 'active') return;
+  const acc = bankAccounts.find(a => a.id === loan.accId);
+  const payment = Math.min(loan.emi, loan.remaining);
+  if (acc.balance < payment) { bankMsg = { type: 'danger', text: 'Insufficient balance to pay EMI.' }; renderBanking(); return; }
+  acc.balance -= payment;
+  loan.remaining -= payment;
+  if (loan.remaining <= 0) { loan.remaining = 0; loan.status = 'closed'; }
+  const txnId = 'T' + String(bankTxns.length + 1).padStart(3, '0');
+  bankTxns.push({ id: txnId, accId: loan.accId, type: 'debit', amount: payment, desc: `EMI Payment - ${loan.id}`, date: '2026-04-05', balance: acc.balance });
+  bankMsg = { type: 'success', text: `EMI ₹${payment.toLocaleString()} paid for ${loanId}. Remaining: ₹${loan.remaining.toLocaleString()}${loan.status === 'closed' ? ' — LOAN CLOSED! 🎉' : ''}` };
+  renderBanking();
+}
+
+function bankHistoryTab() {
+  return bankTxnList(bankTxns);
+}
+</script>
+</body>
+</html>
